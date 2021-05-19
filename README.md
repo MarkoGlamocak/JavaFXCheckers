@@ -1,1 +1,1 @@
-# JavaFXChess
+# JavaFXCheckers
