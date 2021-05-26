@@ -37,8 +37,6 @@ public class App extends Application {
         sceneMap.put("welcome", welcomeScene());
         sceneMap.put("game", gameScene());
 
-        gameButtonMatrix = new GameButton[8][8];
-
         playGameButton.setOnAction(e -> stage.setScene(sceneMap.get("game")));
 
         stage.setScene(sceneMap.get("welcome"));
@@ -54,6 +52,7 @@ public class App extends Application {
     }
 
     public Scene gameScene() {
+        gameButtonMatrix = new GameButton[8][8];
         gameBoard = new GridPane();
         addGrid(gameBoard);
         VBox root = new VBox(gameBoard);
@@ -65,6 +64,11 @@ public class App extends Application {
     public void addGrid(GridPane grid) {
         int color = 0;
         for (int i = 0; i < 8; i++) {
+            if (color == 0) {
+                color = 1;
+            } else {
+                color = 0;
+            }
             for (int j = 0; j < 8; j++) {
                 GameButton gb = new GameButton(j, i, color);
                 if (color == 0) {
@@ -72,11 +76,11 @@ public class App extends Application {
                 } else {
                     color = 0;
                 }
-                gb.setOnAction(new EventHandler<ActionEvent>() {
+                /*gb.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
                         // Nothing For Now!
                     }
-                });
+                });*/
                 grid.add(gb, i, j); // Adds GameButton to GridPane
                 gameButtonMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
