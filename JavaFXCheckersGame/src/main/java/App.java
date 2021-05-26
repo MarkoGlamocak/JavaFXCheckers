@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -19,7 +20,8 @@ import java.util.HashMap;
 public class App extends Application {
 
     private HashMap<String, Scene> sceneMap;
-    private GameButton[][] gameButtonMatrix;
+    private GameBoardTile[][] gameBoardMatrix;
+    private Checker[][] checkerMatrix;
 
     // Welcome Scene Data Members
     private Button playGameButton;
@@ -52,7 +54,8 @@ public class App extends Application {
     }
 
     public Scene gameScene() {
-        gameButtonMatrix = new GameButton[8][8];
+        gameBoardMatrix = new GameBoardTile[8][8];
+        checkerMatrix = new Checker[8][8];
         gameBoard = new GridPane();
         addGrid(gameBoard);
         VBox root = new VBox(gameBoard);
@@ -70,11 +73,24 @@ public class App extends Application {
                 color = 0;
             }
             for (int j = 0; j < 8; j++) {
-                GameButton gb = new GameButton(j, i, color);
+                GameBoardTile gb = new GameBoardTile(j, i, color);
                 if (color == 0) {
                     color = 1;
+                    checkerMatrix[j][i] = null;
                 } else {
                     color = 0;
+                    Checker checker = new Checker(j, i, 0);
+                    gb.getChildren().add(checker);
+                    gb.setAlignment(Pos.CENTER);
+                    if (j < 3) {
+                        gb.setTakenBy(1);
+                        checker.setColor(1);
+                    } else if (j > 4) {
+                        gb.setTakenBy(2);
+                        checker.setColor(2);
+                    } else {
+                        checker.setColor(0);
+                    }
                 }
                 /*gb.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
@@ -82,7 +98,7 @@ public class App extends Application {
                     }
                 });*/
                 grid.add(gb, i, j); // Adds GameButton to GridPane
-                gameButtonMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
+                gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
         }
     }
