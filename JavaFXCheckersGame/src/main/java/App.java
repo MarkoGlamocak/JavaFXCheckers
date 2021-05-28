@@ -88,7 +88,8 @@ public class App extends Application {
         VBox root = new VBox(welcomeLabel, singlePlayer, multiPlayer, howToPlay, exitButton1);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(15);
-        return new Scene(root, 900, 900);
+        root.setStyle("-fx-background-image: url(checkered-board-game.jpg);" + "-fx-background-repeat: stretch;" + "-fx-background-size: 700 700;" + "-fx-background-position: center center;");
+        return new Scene(root, 700, 700);
     }
 
     public Scene singleGameScene() {
@@ -119,6 +120,7 @@ public class App extends Application {
         VBox root = new VBox(resultLabel, playAgainButton, exitButton2);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(15);
+        root.setStyle("-fx-background-image: url(checkered-board-game.jpg);" + "-fx-background-repeat: stretch;" + "-fx-background-size: 700 700;" + "-fx-background-position: center center;");
         return new Scene(root, 700, 700);
     }
 
