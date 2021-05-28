@@ -26,4 +26,21 @@ public class Checker extends Button {
             this.setStyle("-fx-background-color: blue");
         }
     }
+
+    boolean isValid(int val) {
+        if (color == val) {
+            return true;
+        }
+        return false;
+    }
+
+    // Returns the row the Checker is in the gridpane
+    public int getRow() {
+        return this.row;
+    }
+
+    // Returns the column the Checker is in the gridpane
+    public int getColumn() {
+        return this.column;
+    }
 }
