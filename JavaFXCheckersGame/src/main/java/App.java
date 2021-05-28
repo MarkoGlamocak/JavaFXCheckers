@@ -37,6 +37,9 @@ public class App extends Application {
     // Single Game Scene Data Members
     private GridPane gameBoard;
 
+    // How To Play Scene Data Members
+    private Button goBackButton;
+
     // Result Scene Data Members
     private Button exitButton2;
 
@@ -49,6 +52,7 @@ public class App extends Application {
         sceneMap = new HashMap<>();
         sceneMap.put("welcome", welcomeScene());
         sceneMap.put("single", singleGameScene());
+        sceneMap.put("howTo", howToPlayScene());
         sceneMap.put("result", resultScene());
 
         singlePlayer.setOnAction(e -> stage.setScene(sceneMap.get("single")));
@@ -62,6 +66,9 @@ public class App extends Application {
             Platform.exit();
             System.exit(0);
         });
+
+        howToPlay.setOnAction(e -> stage.setScene(sceneMap.get("howTo")));
+        goBackButton.setOnAction(e -> stage.setScene(sceneMap.get("welcome")));
 
         stage.setScene(sceneMap.get("welcome"));
         stage.show();
@@ -92,6 +99,14 @@ public class App extends Application {
         addGrid(gameBoard);
         VBox root = new VBox(gameBoard);
         root.setAlignment(Pos.CENTER);
+        return new Scene(root, 700, 700);
+    }
+
+    public Scene howToPlayScene() {
+        Label titleHowTo = new Label("How To Play");
+        Label instructions = new Label("Instructions");
+        goBackButton = new Button("Go Back");
+        VBox root = new VBox(titleHowTo, instructions, goBackButton);
         return new Scene(root, 700, 700);
     }
 
