@@ -25,7 +25,10 @@ public class App extends Application {
     private int whichPlayer = 1;
 
     // Welcome Scene Data Members
-    private Button playGameButton;
+    private Button singlePlayer;
+    private Button multiPlayer;
+    private Button howToPlay;
+    private Button exitButton;
 
     // Game Scene Data Members
     private GridPane gameBoard;
@@ -38,10 +41,10 @@ public class App extends Application {
     public void start(Stage stage) {
         sceneMap = new HashMap<>();
         sceneMap.put("welcome", welcomeScene());
-        sceneMap.put("game", gameScene());
+        sceneMap.put("single", singleGameScene());
         sceneMap.put("result", resultScene());
 
-        playGameButton.setOnAction(e -> stage.setScene(sceneMap.get("game")));
+        singlePlayer.setOnAction(e -> stage.setScene(sceneMap.get("single")));
 
         stage.setScene(sceneMap.get("welcome"));
         stage.show();
@@ -49,13 +52,22 @@ public class App extends Application {
 
     public Scene welcomeScene() {
         Label welcomeLabel = new Label("The Game of Checkers");
-        playGameButton = new Button("Play Game");
-        VBox root = new VBox(welcomeLabel, playGameButton);
+        welcomeLabel.setFont(Font.font("Times New Roman", 70));
+        singlePlayer = new Button("Single Player");
+        singlePlayer.setFont(Font.font("Times New Roman", 30));
+        multiPlayer = new Button("Multi Player");
+        multiPlayer.setFont(Font.font("Times New Roman", 30));
+        howToPlay = new Button("How To Play");
+        howToPlay.setFont(Font.font("Times New Roman", 30));
+        exitButton = new Button("Exit");
+        exitButton.setFont(Font.font("Times New Roman", 30));
+        VBox root = new VBox(welcomeLabel, singlePlayer, multiPlayer, howToPlay, exitButton);
         root.setAlignment(Pos.CENTER);
+        root.setSpacing(15);
         return new Scene(root, 900, 900);
     }
 
-    public Scene gameScene() {
+    public Scene singleGameScene() {
         gameBoardMatrix = new GameBoardTile[8][8];
         checkerMatrix = new Checker[8][8];
         gameBoard = new GridPane();
@@ -89,12 +101,12 @@ public class App extends Application {
             }
             for (int j = 0; j < 8; j++) {
                 GameBoardTile gb = new GameBoardTile(j, i, color);
+                Checker checker = new Checker(j, i, 0);
                 if (color == 0) {
                     color = 1;
                     checkerMatrix[j][i] = null;
                 } else {
                     color = 0;
-                    Checker checker = new Checker(j, i, 0);
                     gb.getChildren().add(checker);
                     gb.setAlignment(Pos.CENTER);
                     if (j < 3) {
@@ -107,11 +119,13 @@ public class App extends Application {
                         checker.setColor(0);
                     }
                 }
-                /*gb.setOnAction(new EventHandler<ActionEvent>() {
+                /*
+                checker.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
-                        // Nothing For Now!
+                        checker.
                     }
-                });*/
+                });
+                 */
                 grid.add(gb, i, j); // Adds GameButton to GridPane
                 gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
