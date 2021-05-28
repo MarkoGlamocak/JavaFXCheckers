@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -28,10 +29,13 @@ public class App extends Application {
     private Button singlePlayer;
     private Button multiPlayer;
     private Button howToPlay;
-    private Button exitButton;
+    private Button exitButton1;
 
-    // Game Scene Data Members
+    // Single Game Scene Data Members
     private GridPane gameBoard;
+
+    // Result Scene Data Members
+    private Button exitButton2;
 
     public static void main(String[] args) {
         launch();
@@ -46,6 +50,16 @@ public class App extends Application {
 
         singlePlayer.setOnAction(e -> stage.setScene(sceneMap.get("single")));
 
+        exitButton1.setOnAction(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
+        exitButton2.setOnAction(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
         stage.setScene(sceneMap.get("welcome"));
         stage.show();
     }
@@ -59,9 +73,9 @@ public class App extends Application {
         multiPlayer.setFont(Font.font("Times New Roman", 30));
         howToPlay = new Button("How To Play");
         howToPlay.setFont(Font.font("Times New Roman", 30));
-        exitButton = new Button("Exit");
-        exitButton.setFont(Font.font("Times New Roman", 30));
-        VBox root = new VBox(welcomeLabel, singlePlayer, multiPlayer, howToPlay, exitButton);
+        exitButton1 = new Button("Exit");
+        exitButton1.setFont(Font.font("Times New Roman", 30));
+        VBox root = new VBox(welcomeLabel, singlePlayer, multiPlayer, howToPlay, exitButton1);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(15);
         return new Scene(root, 900, 900);
@@ -82,9 +96,8 @@ public class App extends Application {
         resultLabel.setAlignment(Pos.CENTER);
         Button playAgainButton = new Button("Play Again");
         playAgainButton.setAlignment(Pos.CENTER);
-        Button exitButton = new Button("Exit");
-        exitButton.setAlignment(Pos.CENTER);
-        VBox root = new VBox(resultLabel, playAgainButton, exitButton);
+        exitButton2 = new Button("Exit");
+        VBox root = new VBox(resultLabel, playAgainButton, exitButton2);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(15);
         return new Scene(root, 700, 700);
