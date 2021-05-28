@@ -22,6 +22,7 @@ public class App extends Application {
     private HashMap<String, Scene> sceneMap;
     private GameBoardTile[][] gameBoardMatrix;
     private Checker[][] checkerMatrix;
+    private int whichPlayer = 1;
 
     // Welcome Scene Data Members
     private Button playGameButton;
@@ -38,6 +39,7 @@ public class App extends Application {
         sceneMap = new HashMap<>();
         sceneMap.put("welcome", welcomeScene());
         sceneMap.put("game", gameScene());
+        sceneMap.put("result", resultScene());
 
         playGameButton.setOnAction(e -> stage.setScene(sceneMap.get("game")));
 
@@ -60,6 +62,19 @@ public class App extends Application {
         addGrid(gameBoard);
         VBox root = new VBox(gameBoard);
         root.setAlignment(Pos.CENTER);
+        return new Scene(root, 700, 700);
+    }
+
+    public Scene resultScene() {
+        Label resultLabel = new Label("Player Blank Won!");
+        resultLabel.setAlignment(Pos.CENTER);
+        Button playAgainButton = new Button("Play Again");
+        playAgainButton.setAlignment(Pos.CENTER);
+        Button exitButton = new Button("Exit");
+        exitButton.setAlignment(Pos.CENTER);
+        VBox root = new VBox(resultLabel, playAgainButton, exitButton);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(15);
         return new Scene(root, 700, 700);
     }
 
