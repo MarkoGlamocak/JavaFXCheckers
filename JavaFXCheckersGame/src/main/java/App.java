@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,6 +25,8 @@ public class App extends Application {
     private GameBoardTile[][] gameBoardMatrix;
     private Checker[][] checkerMatrix;
     private int whichPlayer = 1;
+    private int lastPlayerToMove = 1;
+    private int[] checkerLocation;
 
     // Welcome Scene Data Members
     private Button singlePlayer;
@@ -84,6 +87,7 @@ public class App extends Application {
     public Scene singleGameScene() {
         gameBoardMatrix = new GameBoardTile[8][8];
         checkerMatrix = new Checker[8][8];
+        checkerLocation = new int[2];
         gameBoard = new GridPane();
         addGrid(gameBoard);
         VBox root = new VBox(gameBoard);
@@ -132,13 +136,29 @@ public class App extends Application {
                         checker.setColor(0);
                     }
                 }
-                /*
                 checker.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
-                        checker.
+                        if (checker.isValid(whichPlayer)) {
+                            if (whichPlayer == 1) {
+                                lastPlayerToMove = 1;
+                                whichPlayer = 0;
+                                checker.setColor(0);
+                            } else if (whichPlayer == 2) {
+                                lastPlayerToMove = 2;
+                                whichPlayer = 0;
+                                checker.setColor(0);
+                            } else {
+                                if (lastPlayerToMove == 1) {
+                                    whichPlayer = 2;
+                                    checker.setColor(1);
+                                } else {
+                                    whichPlayer = 1;
+                                    checker.setColor(2);
+                                }
+                            }
+                        }
                     }
                 });
-                 */
                 grid.add(gb, i, j); // Adds GameButton to GridPane
                 gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
