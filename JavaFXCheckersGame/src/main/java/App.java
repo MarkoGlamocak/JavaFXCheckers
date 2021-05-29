@@ -160,14 +160,12 @@ public class App extends Application {
                             if (whichPlayer == 1) {
                                 lastPlayerToMove = 1;
                                 whichPlayer = 0;
-                                //checker.setColor(0);
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
                             } else if (whichPlayer == 2) {
                                 lastPlayerToMove = 2;
                                 whichPlayer = 0;
-                                //checker.setColor(0);
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
@@ -185,6 +183,16 @@ public class App extends Application {
                                         lastChecker.setColor(0);
                                     }
                                 }
+                            }
+                        } else {
+                            if (checker.getColor() == 1 && lastPlayerToMove == 1) {
+                                checkerLocation[0] = checker.getRow();
+                                checkerLocation[1] = checker.getColumn();
+                                lastChecker = checker;
+                            } else if (checker.getColor() == 2 && lastPlayerToMove == 2) {
+                                checkerLocation[0] = checker.getRow();
+                                checkerLocation[1] = checker.getColumn();
+                                lastChecker = checker;
                             }
                         }
                     }
