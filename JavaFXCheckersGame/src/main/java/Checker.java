@@ -43,4 +43,9 @@ public class Checker extends Button {
     public int getColumn() {
         return this.column;
     }
+
+    // Returns the Checker Color, this is how we can identify the who the checker belongs to
+    public int getColor() {
+        return this.color;
+    }
 }
