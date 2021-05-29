@@ -160,17 +160,25 @@ public class App extends Application {
                                 lastPlayerToMove = 1;
                                 whichPlayer = 0;
                                 checker.setColor(0);
+                                checkerLocation[0] = checker.getRow();
+                                checkerLocation[1] = checker.getColumn();
                             } else if (whichPlayer == 2) {
                                 lastPlayerToMove = 2;
                                 whichPlayer = 0;
                                 checker.setColor(0);
+                                checkerLocation[0] = checker.getRow();
+                                checkerLocation[1] = checker.getColumn();
                             } else {
                                 if (lastPlayerToMove == 1) {
-                                    whichPlayer = 2;
-                                    checker.setColor(1);
+                                    if ((checker.getRow() - checkerLocation[0] == 1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
+                                        whichPlayer = 2;
+                                        checker.setColor(1);
+                                    }
                                 } else {
-                                    whichPlayer = 1;
-                                    checker.setColor(2);
+                                    if ((checker.getRow() - checkerLocation[0] == -1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
+                                        whichPlayer = 1;
+                                        checker.setColor(2);
+                                    }
                                 }
                             }
                         }
