@@ -27,6 +27,7 @@ public class App extends Application {
     private int whichPlayer = 1;
     private int lastPlayerToMove = 1;
     private int[] checkerLocation;
+    private Checker lastChecker;
 
     // Welcome Scene Data Members
     private Button singlePlayer;
@@ -159,25 +160,29 @@ public class App extends Application {
                             if (whichPlayer == 1) {
                                 lastPlayerToMove = 1;
                                 whichPlayer = 0;
-                                checker.setColor(0);
+                                //checker.setColor(0);
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
+                                lastChecker = checker;
                             } else if (whichPlayer == 2) {
                                 lastPlayerToMove = 2;
                                 whichPlayer = 0;
-                                checker.setColor(0);
+                                //checker.setColor(0);
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
+                                lastChecker = checker;
                             } else {
                                 if (lastPlayerToMove == 1) {
                                     if ((checker.getRow() - checkerLocation[0] == 1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
                                         whichPlayer = 2;
                                         checker.setColor(1);
+                                        lastChecker.setColor(0);
                                     }
                                 } else {
                                     if ((checker.getRow() - checkerLocation[0] == -1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
                                         whichPlayer = 1;
                                         checker.setColor(2);
+                                        lastChecker.setColor(0);
                                     }
                                 }
                             }
