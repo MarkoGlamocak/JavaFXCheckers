@@ -163,24 +163,30 @@ public class App extends Application {
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
+                                checker.selectChecker();
                             } else if (whichPlayer == 2) {
                                 lastPlayerToMove = 2;
                                 whichPlayer = 0;
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
+                                checker.selectChecker();
                             } else {
                                 if (lastPlayerToMove == 1) {
                                     if ((checker.getRow() - checkerLocation[0] == 1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
                                         whichPlayer = 2;
                                         checker.setColor(1);
                                         lastChecker.setColor(0);
+                                        lastChecker.unselectChecker();
+                                        lastPlayerToMove = 2;
                                     }
                                 } else {
                                     if ((checker.getRow() - checkerLocation[0] == -1) && (Math.abs(checker.getColumn() - checkerLocation[1]) == 1)) {
                                         whichPlayer = 1;
                                         checker.setColor(2);
                                         lastChecker.setColor(0);
+                                        lastChecker.unselectChecker();
+                                        lastPlayerToMove = 1;
                                     }
                                 }
                             }
@@ -188,11 +194,15 @@ public class App extends Application {
                             if (checker.getColor() == 1 && lastPlayerToMove == 1) {
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
+                                lastChecker.unselectChecker();
                                 lastChecker = checker;
+                                checker.selectChecker();
                             } else if (checker.getColor() == 2 && lastPlayerToMove == 2) {
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
+                                lastChecker.unselectChecker();
                                 lastChecker = checker;
+                                checker.selectChecker();
                             }
                         }
                     }
