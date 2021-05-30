@@ -5,12 +5,12 @@ public class Checker extends Button {
     private int row;
     private int column;
     private int color; // color = 0 means the checker is white, color = 1 means the checker is red, color = 2 means the tile is blue.
+    final double r = 30;
 
     Checker(int x, int y, int z) {
         this.row = x;
         this.column = y;
         this.color = z;
-        double r = 30;
         this.setShape(new Circle(r));
         this.setMinSize(2*r, 2*r);
         this.setMaxSize(2*r, 2*r);
@@ -25,6 +25,16 @@ public class Checker extends Button {
         } else {
             this.setStyle("-fx-background-color: blue");
         }
+    }
+
+    void selectChecker() {
+        this.setMinSize((2*r) + 10, (2*r) + 10);
+        this.setMaxSize((2*r) + 10, (2*r) + 10);
+    }
+
+    void unselectChecker() {
+        this.setMinSize(2*r, 2*r);
+        this.setMaxSize(2*r, 2*r);
     }
 
     boolean isValid(int val) {
