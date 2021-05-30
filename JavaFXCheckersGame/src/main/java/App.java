@@ -28,6 +28,8 @@ public class App extends Application {
     private int lastPlayerToMove = 1;
     private int[] checkerLocation;
     private Checker lastChecker;
+    private int numRed = 12;
+    private int numBlue = 12;
 
     // Welcome Scene Data Members
     private Button singlePlayer;
@@ -89,8 +91,8 @@ public class App extends Application {
         VBox root = new VBox(welcomeLabel, singlePlayer, multiPlayer, howToPlay, exitButton1);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(15);
-        root.setStyle("-fx-background-image: url(checkered-board-game.jpg);" + "-fx-background-repeat: stretch;" + "-fx-background-size: 700 700;" + "-fx-background-position: center center;");
-        return new Scene(root, 700, 700);
+        root.setStyle("-fx-background-image: url(checkered-board-game.jpg);" + "-fx-background-repeat: stretch;" + "-fx-background-size: 900 900;" + "-fx-background-position: center center;");
+        return new Scene(root, 900, 900);
     }
 
     public Scene singleGameScene() {
@@ -211,5 +213,14 @@ public class App extends Application {
                 gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
         }
+    }
+
+    int isWin() {
+        if (numRed == 0) {
+            return 1;
+        } else if (numBlue == 0) {
+            return 2;
+        }
+        return 0;
     }
 }
