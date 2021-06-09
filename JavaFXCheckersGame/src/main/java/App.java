@@ -10,6 +10,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -209,6 +212,65 @@ public class App extends Application {
                 gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
             }
         }
+    }
+
+    ArrayList<Checker> findValidMoves(Checker checker) {
+        ArrayList<Checker> possibleMoves = new ArrayList<>();
+        int checkersInRow = 0;
+        int row = checker.getRow();
+        int column = checker.getColumn();
+        if (checker.getColor() == 1) {
+            row = row + 1;
+            column = column + 1;
+            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 1) {
+                if (checkerMatrix[row][column].getColor() == 0) {
+                    possibleMoves.add(checkerMatrix[row][column]);
+                    checkersInRow = 0;
+                } else if (checkerMatrix[row][column].getColor() == 2) {
+                    checkersInRow++;
+                }
+                row = row + 1;
+                column = column + 1;
+            }
+            row = checker.getRow() + 1;
+            column = checker.getColumn() - 1;
+            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 1) {
+                if (checkerMatrix[row][column].getColor() == 0) {
+                    possibleMoves.add(checkerMatrix[row][column]);
+                    checkersInRow = 0;
+                } else if (checkerMatrix[row][column].getColor() == 2) {
+                    checkersInRow++;
+                }
+                row = row + 1;
+                column = column - 1;
+            }
+        } else if (checker.getColor() == 2) {
+            row = checker.getRow() - 1;
+            column = checker.getColumn() + 1;
+            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 2) {
+                if (checkerMatrix[row][column].getColor() == 0) {
+                    possibleMoves.add(checkerMatrix[row][column]);
+                    checkersInRow = 0;
+                } else if (checkerMatrix[row][column].getColor() == 1) {
+                    checkersInRow++;
+                }
+                row = row - 1;
+                column = column + 1;
+            }
+            row = checker.getRow() - 1;
+            column = checker.getColumn() - 1;
+            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 2) {
+                if (checkerMatrix[row][column].getColor() == 0) {
+                    possibleMoves.add(checkerMatrix[row][column]);
+                    checkersInRow = 0;
+                } else if (checkerMatrix[row][column].getColor() == 1) {
+                    checkersInRow++;
+                }
+                row = row - 1;
+                column = column - 1;
+            }
+        }
+        return possibleMoves;
     }
 
     int isWin() {
