@@ -216,30 +216,23 @@ public class App extends Application {
 
     ArrayList<Checker> findValidMoves(Checker checker) {
         ArrayList<Checker> possibleMoves = new ArrayList<>();
-        int checkersInRow = 0;
         int row = checker.getRow();
         int column = checker.getColumn();
         if (checker.getColor() == 1) {
             row = row + 1;
             column = column + 1;
-            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 1) {
+            while (checkerMatrix[row][column].getColor() != checkerMatrix[row - 1][column - 1].getColor() && checkerMatrix[row][column].getColor() != 1) {
                 if (checkerMatrix[row][column].getColor() == 0) {
                     possibleMoves.add(checkerMatrix[row][column]);
-                    checkersInRow = 0;
-                } else if (checkerMatrix[row][column].getColor() == 2) {
-                    checkersInRow++;
                 }
                 row = row + 1;
                 column = column + 1;
             }
             row = checker.getRow() + 1;
             column = checker.getColumn() - 1;
-            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 1) {
+            while (checkerMatrix[row][column].getColor() != checkerMatrix[row - 1][column + 1].getColor() && checkerMatrix[row][column].getColor() != 1) {
                 if (checkerMatrix[row][column].getColor() == 0) {
                     possibleMoves.add(checkerMatrix[row][column]);
-                    checkersInRow = 0;
-                } else if (checkerMatrix[row][column].getColor() == 2) {
-                    checkersInRow++;
                 }
                 row = row + 1;
                 column = column - 1;
@@ -247,24 +240,18 @@ public class App extends Application {
         } else if (checker.getColor() == 2) {
             row = checker.getRow() - 1;
             column = checker.getColumn() + 1;
-            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 2) {
+            while (checkerMatrix[row][column].getColor() != checkerMatrix[row + 1][column - 1].getColor() && checkerMatrix[row][column].getColor() != 2) {
                 if (checkerMatrix[row][column].getColor() == 0) {
                     possibleMoves.add(checkerMatrix[row][column]);
-                    checkersInRow = 0;
-                } else if (checkerMatrix[row][column].getColor() == 1) {
-                    checkersInRow++;
                 }
                 row = row - 1;
                 column = column + 1;
             }
             row = checker.getRow() - 1;
             column = checker.getColumn() - 1;
-            while (checkersInRow != 2 && checkerMatrix[row][column].getColor() != 2) {
+            while (checkerMatrix[row][column].getColor() != checkerMatrix[row + 1][column + 1].getColor() && checkerMatrix[row][column].getColor() != 2) {
                 if (checkerMatrix[row][column].getColor() == 0) {
                     possibleMoves.add(checkerMatrix[row][column]);
-                    checkersInRow = 0;
-                } else if (checkerMatrix[row][column].getColor() == 1) {
-                    checkersInRow++;
                 }
                 row = row - 1;
                 column = column - 1;
