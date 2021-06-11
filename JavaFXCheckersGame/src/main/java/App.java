@@ -28,6 +28,7 @@ public class App extends Application {
     private int lastPlayerToMove = 1;
     private int[] checkerLocation;
     private Checker lastChecker;
+    private boolean checkerIsSelected = false;
     private ArrayList<Pair<Integer, Integer>> possibleMoves;
     private int numRed = 12;
     private int numBlue = 12;
@@ -40,6 +41,8 @@ public class App extends Application {
 
     // Single Game Scene Data Members
     private GridPane gameBoard;
+    private Label turnTracker;
+    private Button endTurn;
 
     // How To Play Scene Data Members
     private Button goBackButton;
@@ -74,6 +77,19 @@ public class App extends Application {
         howToPlay.setOnAction(e -> stage.setScene(sceneMap.get("howTo")));
         goBackButton.setOnAction(e -> stage.setScene(sceneMap.get("welcome")));
 
+        endTurn.setOnAction(e -> {  lastChecker.unselectChecker();
+                                    checkerIsSelected = false;
+                                    if (lastChecker.getColor() == 1) {
+                                        whichPlayer = 2;
+                                        turnTracker.setText("Blue's Turn");
+                                        turnTracker.setStyle("-fx-background-color: blue");
+                                    } else {
+                                        whichPlayer = 1;
+                                        turnTracker.setText("Red's Turn");
+                                        turnTracker.setStyle("-fx-background-color: red");
+                                    }
+        });
+
         stage.setScene(sceneMap.get("welcome"));
         stage.show();
     }
@@ -104,9 +120,10 @@ public class App extends Application {
         possibleMoves = new ArrayList<>();
         addGrid(gameBoard);
         Label timer = new Label("5:00");
-        Label turn = new Label("Player: " + Integer.toString(whichPlayer) + "'s turn");
-        Button endTurn = new Button("End Turn");
-        VBox root1 = new VBox(timer, turn, endTurn);
+        turnTracker = new Label("Red's Turn");
+        turnTracker.setStyle("-fx-background-color: red");
+        endTurn = new Button("End Turn");
+        VBox root1 = new VBox(timer, turnTracker, endTurn);
         root1.setAlignment(Pos.CENTER);
         root1.setPrefSize(200, 50);
         root1.setSpacing(15);
@@ -185,39 +202,45 @@ public class App extends Application {
                                 possibleMoves = findValidMoves(checker);
                             } else {
                                 Pair<Integer, Integer> temp = new Pair(checker.getRow(), checker.getColumn());
-                                if (lastPlayerToMove == 1) {
+                                if (lastPlayerToMove == 1 && checker.getColor() == 1 && !checkerIsSelected) {
+                                    checkerLocation[0] = checker.getRow();
+                                    checkerLocation[1] = checker.getColumn();
+                                    lastChecker.unselectChecker();
+                                    lastChecker = checker;
+                                    checker.selectChecker();
+                                    possibleMoves = findValidMoves(checker);
+                                } else if (lastPlayerToMove == 2 && checker.getColor() == 2 && !checkerIsSelected) {
+                                    checkerLocation[0] = checker.getRow();
+                                    checkerLocation[1] = checker.getColumn();
+                                    lastChecker.unselectChecker();
+                                    lastChecker = checker;
+                                    checker.selectChecker();
+                                    possibleMoves = findValidMoves(checker);
+                                } else if (lastPlayerToMove == 1 && checker.getColor() == 0) {
                                     if (possibleMoves.contains(temp)) {
-                                        whichPlayer = 2;
+                                        //whichPlayer = 2;
                                         checker.setColor(1);
+                                        checker.selectChecker();
+                                        updateFindValidMoves(checker, lastChecker);
+                                        checkerIsSelected = true;
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
-                                        lastPlayerToMove = 2;
+                                        lastChecker = checker;
+                                        //lastPlayerToMove = 2;
                                     }
-                                } else {
+                                } else if (lastPlayerToMove == 2 && checker.getColor() == 0) {
                                     if (possibleMoves.contains(temp)) {
-                                        whichPlayer = 1;
+                                        //whichPlayer = 1;
                                         checker.setColor(2);
+                                        checker.selectChecker();
+                                        updateFindValidMoves(checker, lastChecker);
+                                        checkerIsSelected = true;
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
-                                        lastPlayerToMove = 1;
+                                        lastChecker = checker;
+                                        //lastPlayerToMove = 1;
                                     }
                                 }
-                            }
-                        } else {
-                            if (checker.getColor() == 1 && lastPlayerToMove == 1) {
-                                checkerLocation[0] = checker.getRow();
-                                checkerLocation[1] = checker.getColumn();
-                                lastChecker.unselectChecker();
-                                lastChecker = checker;
-                                checker.selectChecker();
-                                possibleMoves = findValidMoves(checker);
-                            } else if (checker.getColor() == 2 && lastPlayerToMove == 2) {
-                                checkerLocation[0] = checker.getRow();
-                                checkerLocation[1] = checker.getColumn();
-                                lastChecker.unselectChecker();
-                                lastChecker = checker;
-                                checker.selectChecker();
-                                possibleMoves = findValidMoves(checker);
                             }
                         }
                     }
@@ -238,7 +261,6 @@ public class App extends Application {
             column = column + 1;
             while (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
                 if (checkerMatrix[row][column].getColor() == checkerMatrix[row - 1][column - 1].getColor() || checkerMatrix[row][column].getColor() == 1) {
-                    System.out.println("tick");
                     break;
                 }
                 if (checkerMatrix[row][column].getColor() == 0) {
@@ -286,6 +308,22 @@ public class App extends Application {
             }
         }
         return validMoves;
+    }
+
+    void updateFindValidMoves (Checker checker, Checker lastChecker) {
+            if (lastChecker.getColumn() > checker.getColumn()) {
+                for (Pair<Integer, Integer> a: possibleMoves) {
+                    if (a.getValue() > lastChecker.getColumn()) {
+                        possibleMoves.remove(a);
+                    }
+                }
+            } else {
+                for (Pair<Integer, Integer> a : possibleMoves) {
+                    if (a.getValue() < lastChecker.getColumn()) {
+                        possibleMoves.remove(a);
+                    }
+                }
+            }
     }
 
     int isWin() {
