@@ -38,6 +38,9 @@ public class Checker extends Button {
     }
 
     boolean isValid(int val) {
+        if (val == 0) {
+            return true;
+        }
         if (color == val) {
             return true;
         }
