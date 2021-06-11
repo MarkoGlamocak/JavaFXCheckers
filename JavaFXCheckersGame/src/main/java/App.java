@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -102,9 +103,16 @@ public class App extends Application {
         gameBoard = new GridPane();
         possibleMoves = new ArrayList<>();
         addGrid(gameBoard);
-        VBox root = new VBox(gameBoard);
+        Label timer = new Label("5:00");
+        Label turn = new Label("Player: " + Integer.toString(whichPlayer) + "'s turn");
+        Button endTurn = new Button("End Turn");
+        VBox root1 = new VBox(timer, turn, endTurn);
+        root1.setAlignment(Pos.CENTER);
+        root1.setPrefSize(200, 50);
+        root1.setSpacing(15);
+        HBox root = new HBox(root1, gameBoard);
         root.setAlignment(Pos.CENTER);
-        return new Scene(root, 700, 700);
+        return new Scene(root, 800, 800);
     }
 
     public Scene howToPlayScene() {
@@ -166,8 +174,7 @@ public class App extends Application {
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
                                 checker.selectChecker();
-                                possibleMoves.clear();
-                                findValidMoves(checker, checker, checker);
+                                possibleMoves = findValidMoves(checker);
                             } else if (whichPlayer == 2) {
                                 lastPlayerToMove = 2;
                                 whichPlayer = 0;
@@ -175,8 +182,7 @@ public class App extends Application {
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker = checker;
                                 checker.selectChecker();
-                                possibleMoves.clear();
-                                findValidMoves(checker, checker, checker);
+                                possibleMoves = findValidMoves(checker);
                             } else {
                                 Pair<Integer, Integer> temp = new Pair(checker.getRow(), checker.getColumn());
                                 if (lastPlayerToMove == 1) {
@@ -204,16 +210,14 @@ public class App extends Application {
                                 lastChecker.unselectChecker();
                                 lastChecker = checker;
                                 checker.selectChecker();
-                                possibleMoves.clear();
-                                findValidMoves(checker, checker, checker);
+                                possibleMoves = findValidMoves(checker);
                             } else if (checker.getColor() == 2 && lastPlayerToMove == 2) {
                                 checkerLocation[0] = checker.getRow();
                                 checkerLocation[1] = checker.getColumn();
                                 lastChecker.unselectChecker();
                                 lastChecker = checker;
                                 checker.selectChecker();
-                                possibleMoves.clear();
-                                findValidMoves(checker, checker, checker);
+                                possibleMoves = findValidMoves(checker);
                             }
                         }
                     }
@@ -225,7 +229,6 @@ public class App extends Application {
         }
     }
 
-    /*
     ArrayList<Pair<Integer, Integer>> findValidMoves(Checker checker) {
         ArrayList<Pair<Integer, Integer>> validMoves = new ArrayList<>();
         int row = checker.getRow();
@@ -283,66 +286,6 @@ public class App extends Application {
             }
         }
         return validMoves;
-    }
-     */
-
-    void findValidMoves(Checker originalChecker, Checker currentChecker, Checker previousChecker) {
-        if (originalChecker.getRow() != currentChecker.getRow() || originalChecker.getColumn() != currentChecker.getColumn()) {
-            if (originalChecker.getColor() == 1 && currentChecker.getColor() == 1) {
-                return;
-            } else if (originalChecker.getColor() == 2 && currentChecker.getColor() == 2) {
-                return;
-            } else if (currentChecker.getColor() == 1) {
-                if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() + 1], currentChecker);
-                }
-                if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() - 1], currentChecker);
-                }
-            } else if (currentChecker.getColor() == 2) {
-                if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() + 1], currentChecker);
-                }
-                if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() - 1], currentChecker);
-                }
-            } else {
-                possibleMoves.add(new Pair(currentChecker.getRow(), currentChecker.getColumn()));
-                if (previousChecker.getColor() != originalChecker.getColor()) {
-                    if (originalChecker.getColor() == 1) {
-                        if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                            findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() + 1], currentChecker);
-                        }
-                        if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                            findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() - 1], currentChecker);
-                        }
-                    } else {
-                        if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                            findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() + 1], currentChecker);
-                        }
-                        if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                            findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() - 1], currentChecker);
-                        }
-                    }
-                }
-            }
-        } else {
-            if (originalChecker.getColor() == 1) {
-                if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() + 1], currentChecker);
-                }
-                if (currentChecker.getRow() + 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() + 1][currentChecker.getColumn() - 1], currentChecker);
-                }
-            } else {
-                if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() + 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() + 1], currentChecker);
-                }
-                if (currentChecker.getRow() - 1 >= 0 && currentChecker.getColumn() - 1 <= 7) {
-                    findValidMoves(originalChecker, checkerMatrix[currentChecker.getRow() - 1][currentChecker.getColumn() - 1], currentChecker);
-                }
-            }
-        }
     }
 
     int isWin() {
