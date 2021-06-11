@@ -311,19 +311,21 @@ public class App extends Application {
     }
 
     void updateFindValidMoves (Checker checker, Checker lastChecker) {
+        ArrayList<Pair<Integer, Integer>> validMoves = new ArrayList<>(possibleMoves);
             if (lastChecker.getColumn() > checker.getColumn()) {
                 for (Pair<Integer, Integer> a: possibleMoves) {
                     if (a.getValue() > lastChecker.getColumn()) {
-                        possibleMoves.remove(a);
+                        validMoves.remove(a);
                     }
                 }
             } else {
                 for (Pair<Integer, Integer> a : possibleMoves) {
                     if (a.getValue() < lastChecker.getColumn()) {
-                        possibleMoves.remove(a);
+                        validMoves.remove(a);
                     }
                 }
             }
+            possibleMoves = validMoves;
     }
 
     int isWin() {
