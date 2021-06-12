@@ -80,6 +80,7 @@ public class App extends Application {
 
         endTurn.setOnAction(e -> {  lastChecker.unselectChecker();
                                     checkerIsSelected = false;
+                                    canMoveAgain = true;
                                     if (lastChecker.getColor() == 1) {
                                         whichPlayer = 2;
                                         turnTracker.setText("Blue's Turn");
@@ -220,18 +221,21 @@ public class App extends Application {
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
                                         lastChecker = checker;
-                                    } else if (lastChecker.getRow() + 2 < 8 && lastChecker.getColumn() - 2 >= 0) {
+                                    }
+                                    if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() - 2] == checker) {
                                             checker.setColor(1);
                                             checker.selectChecker();
                                             checkerIsSelected = true;
+                                            canMoveAgain = false;
                                             lastChecker.setColor(0);
                                             lastChecker.unselectChecker();
                                             checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].setColor(0);
                                             numBlue--;
                                             lastChecker = checker;
                                         }
-                                    } else if (lastChecker.getRow() + 2 < 8 && lastChecker.getColumn() + 2 < 8) {
+                                    }
+                                    if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() + 2] == checker) {
                                             checker.setColor(1);
                                             checker.selectChecker();
@@ -248,10 +252,12 @@ public class App extends Application {
                                         checker.setColor(2);
                                         checker.selectChecker();
                                         checkerIsSelected = true;
+                                        canMoveAgain = false;
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
                                         lastChecker = checker;
-                                    } else if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() - 2 >= 0) {
+                                    }
+                                    if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() - 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
@@ -262,7 +268,8 @@ public class App extends Application {
                                             numRed--;
                                             lastChecker = checker;
                                         }
-                                    } else if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() + 2 < 8) {
+                                    }
+                                    if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() + 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
