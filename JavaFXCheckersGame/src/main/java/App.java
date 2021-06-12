@@ -287,68 +287,6 @@ public class App extends Application {
         }
     }
 
-    /*
-    ArrayList<Pair<Integer, Integer>> findValidMoves(Checker checker) {
-        ArrayList<Pair<Integer, Integer>> validMoves = new ArrayList<>();
-        int row = checker.getRow();
-        int column = checker.getColumn();
-        if (checker.getColor() == 1) {
-            row = row + 1;
-            column = column + 1;
-            while (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
-                if (checkerMatrix[row][column].getColor() == checkerMatrix[row - 1][column - 1].getColor() || checkerMatrix[row][column].getColor() == 1) {
-                    break;
-                }
-                if (checkerMatrix[row][column].getColor() == 0) {
-                    validMoves.add(new Pair(row, column));
-                }
-                row = row + 1;
-                column = column + 1;
-            }
-            row = checker.getRow() + 1;
-            column = checker.getColumn() - 1;
-            while (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
-                if (checkerMatrix[row][column].getColor() == checkerMatrix[row - 1][column + 1].getColor() || checkerMatrix[row][column].getColor() == 1) {
-                    break;
-                }
-                if (checkerMatrix[row][column].getColor() == 0) {
-                    validMoves.add(new Pair(row, column));
-                }
-                row = row + 1;
-                column = column - 1;
-            }
-        } else if (checker.getColor() == 2) {
-            row = checker.getRow() - 1;
-            column = checker.getColumn() + 1;
-            while (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
-                if (checkerMatrix[row][column].getColor() == checkerMatrix[row + 1][column - 1].getColor() || checkerMatrix[row][column].getColor() == 2) {
-                    break;
-                }
-                if (checkerMatrix[row][column].getColor() == 0) {
-                    validMoves.add(new Pair(row, column));
-                }
-                row = row - 1;
-                column = column + 1;
-            }
-            row = checker.getRow() - 1;
-            column = checker.getColumn() - 1;
-            while (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
-                if (checkerMatrix[row][column].getColor() == checkerMatrix[row + 1][column + 1].getColor() || checkerMatrix[row][column].getColor() == 2) {
-                    break;
-                }
-                if (checkerMatrix[row][column].getColor() == 0) {
-                    validMoves.add(new Pair(row, column));
-                }
-                row = row - 1;
-                column = column - 1;
-            }
-        }
-        return validMoves;
-    }
-
-     */
-
-
     int isWin() {
         if (numRed == 0) {
             return 1;
