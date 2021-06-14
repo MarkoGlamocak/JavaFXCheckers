@@ -5,6 +5,7 @@ public class Checker extends Button {
     private int row;
     private int column;
     private int color; // color = 0 means the checker is white, color = 1 means the checker is red, color = 2 means the tile is blue.
+    private boolean king;
     final double r = 30;
 
     Checker(int x, int y, int z) {
@@ -45,6 +46,20 @@ public class Checker extends Button {
             return true;
         }
         return false;
+    }
+
+    void makeKing() {
+        if (this.color == 1 && this.row == 7) {
+            this.setText("K");
+            this.king = true;
+        } else if (this.color == 2 && this.row == 0) {
+            this.setText("K");
+            this.king = true;
+        }
+    }
+
+    boolean isKing() {
+        return this.king;
     }
 
     // Returns the row the Checker is in the gridpane

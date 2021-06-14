@@ -221,6 +221,7 @@ public class App extends Application {
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
                                         lastChecker = checker;
+                                        checker.makeKing();
                                     }
                                     if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() - 2] == checker) {
@@ -233,6 +234,7 @@ public class App extends Application {
                                             checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].setColor(0);
                                             numBlue--;
                                             lastChecker = checker;
+                                            checker.makeKing();
                                         }
                                     }
                                     if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
@@ -245,6 +247,7 @@ public class App extends Application {
                                             checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].setColor(0);
                                             numBlue--;
                                             lastChecker = checker;
+                                            checker.makeKing();
                                         }
                                     }
                                 } else if (lastPlayerToMove == 2 && checker.getColor() == 0) {
@@ -256,6 +259,7 @@ public class App extends Application {
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
                                         lastChecker = checker;
+                                        checker.makeKing();
                                     }
                                     if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() - 2] == checker) {
@@ -267,6 +271,7 @@ public class App extends Application {
                                             checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].setColor(0);
                                             numRed--;
                                             lastChecker = checker;
+                                            checker.makeKing();
                                         }
                                     }
                                     if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
@@ -279,6 +284,7 @@ public class App extends Application {
                                             checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].setColor(0);
                                             numRed--;
                                             lastChecker = checker;
+                                            checker.makeKing();
                                         }
                                     }
                                 }
@@ -295,6 +301,9 @@ public class App extends Application {
     }
 
     int isWin() {
+        /////
+        ///// ALSOOOOOOO Check if a player can't move. If they can't then they lose.
+        /////
         if (numRed == 0) {
             return 1;
         } else if (numBlue == 0) {
