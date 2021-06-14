@@ -169,8 +169,6 @@ public class App extends Application {
                 Checker checker = new Checker(j, i, 0);
                 if (color == 0) {
                     color = 1;
-                } else {
-                    color = 0;
                     gb.getChildren().add(checker);
                     gb.setAlignment(Pos.CENTER);
                     if (j < 3) {
@@ -182,6 +180,8 @@ public class App extends Application {
                     } else {
                         checker.setColor(0);
                     }
+                } else {
+                    color = 0;
                 }
                 checker.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent event) {
