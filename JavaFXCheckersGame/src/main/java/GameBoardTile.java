@@ -13,7 +13,7 @@ public class GameBoardTile extends VBox {
         this.takenBy = 0;
         this.setColor(z);
         this.setPrefSize(100,100);
-    }/
+    }
 
     // Returns the row the VBox is in the gridpane
     public int getRow() {
