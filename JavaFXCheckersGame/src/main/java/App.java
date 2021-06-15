@@ -217,74 +217,167 @@ public class App extends Application {
                                     if (checker.getRow() == lastChecker.getRow() + 1 && Math.abs(checker.getColumn() - lastChecker.getColumn()) == 1 && !checkerIsSelected) {
                                         checker.setColor(1);
                                         checker.selectChecker();
+                                        checker.makeKing(lastChecker);
                                         checkerIsSelected = true;
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
+                                        lastChecker.destroyKing();
                                         lastChecker = checker;
-                                        checker.makeKing();
+                                    }
+                                    if (checker.getRow() == lastChecker.getRow() - 1 && Math.abs(checker.getColumn() - lastChecker.getColumn()) == 1 && !checkerIsSelected && lastChecker.isKing()) {
+                                        checker.setColor(1);
+                                        checker.selectChecker();
+                                        checker.makeKing(lastChecker);
+                                        checkerIsSelected = true;
+                                        lastChecker.setColor(0);
+                                        lastChecker.unselectChecker();
+                                        lastChecker.destroyKing();
+                                        lastChecker = checker;
                                     }
                                     if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() - 2] == checker) {
                                             checker.setColor(1);
                                             checker.selectChecker();
+                                            checker.makeKing(lastChecker);
                                             checkerIsSelected = true;
                                             canMoveAgain = false;
                                             lastChecker.setColor(0);
                                             lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
                                             checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].destroyKing();
                                             numBlue--;
                                             lastChecker = checker;
-                                            checker.makeKing();
                                         }
                                     }
                                     if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() + 2] == checker) {
                                             checker.setColor(1);
                                             checker.selectChecker();
+                                            checker.makeKing(lastChecker);
                                             checkerIsSelected = true;
                                             lastChecker.setColor(0);
                                             lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
                                             checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].destroyKing();
                                             numBlue--;
                                             lastChecker = checker;
-                                            checker.makeKing();
+                                        }
+                                    }
+                                    if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain && lastChecker.isKing()) {
+                                        if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() - 2] == checker) {
+                                            checker.setColor(1);
+                                            checker.selectChecker();
+                                            checker.makeKing(lastChecker);
+                                            checkerIsSelected = true;
+                                            canMoveAgain = false;
+                                            lastChecker.setColor(0);
+                                            lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].destroyKing();
+                                            numBlue--;
+                                            lastChecker = checker;
+                                        }
+                                    }
+                                    if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain && lastChecker.isKing()) {
+                                        if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].getColor() == 2 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() + 2] == checker) {
+                                            checker.setColor(1);
+                                            checker.selectChecker();
+                                            checker.makeKing(lastChecker);
+                                            checkerIsSelected = true;
+                                            canMoveAgain = false;
+                                            lastChecker.setColor(0);
+                                            lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].destroyKing();
+                                            numBlue--;
+                                            lastChecker = checker;
                                         }
                                     }
                                 } else if (lastPlayerToMove == 2 && checker.getColor() == 0) {
                                     if (checker.getRow() == lastChecker.getRow() - 1 && Math.abs(checker.getColumn() - lastChecker.getColumn()) == 1 && !checkerIsSelected) {
                                         checker.setColor(2);
                                         checker.selectChecker();
+                                        checker.makeKing(lastChecker);
                                         checkerIsSelected = true;
                                         canMoveAgain = false;
                                         lastChecker.setColor(0);
                                         lastChecker.unselectChecker();
+                                        lastChecker.destroyKing();
                                         lastChecker = checker;
-                                        checker.makeKing();
+                                    }
+                                    if (checker.getRow() == lastChecker.getRow() + 1 && Math.abs(checker.getColumn() - lastChecker.getColumn()) == 1 && !checkerIsSelected && lastChecker.isKing()) {
+                                        checker.setColor(2);
+                                        checker.selectChecker();
+                                        checker.makeKing(lastChecker);
+                                        checkerIsSelected = true;
+                                        canMoveAgain = false;
+                                        lastChecker.setColor(0);
+                                        lastChecker.unselectChecker();
+                                        lastChecker.destroyKing();
+                                        lastChecker = checker;
                                     }
                                     if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() - 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
+                                            checker.makeKing(lastChecker);
                                             checkerIsSelected = true;
                                             lastChecker.setColor(0);
                                             lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
                                             checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() - 1].destroyKing();
                                             numRed--;
                                             lastChecker = checker;
-                                            checker.makeKing();
                                         }
                                     }
                                     if (lastChecker.getRow() - 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain) {
                                         if (checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() - 2][lastChecker.getColumn() + 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
+                                            checker.makeKing(lastChecker);
                                             checkerIsSelected = true;
                                             lastChecker.setColor(0);
                                             lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
                                             checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() - 1][lastChecker.getColumn() + 1].destroyKing();
                                             numRed--;
                                             lastChecker = checker;
-                                            checker.makeKing();
+                                        }
+                                    }
+                                    if (lastChecker.getRow() + 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain && lastChecker.isKing()) {
+                                        if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() - 2] == checker) {
+                                            checker.setColor(2);
+                                            checker.selectChecker();
+                                            checker.makeKing(lastChecker);
+                                            checkerIsSelected = true;
+                                            lastChecker.setColor(0);
+                                            lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].destroyKing();
+                                            numRed--;
+                                            lastChecker = checker;
+                                        }
+                                    }
+                                    if (lastChecker.getRow() + 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain && lastChecker.isKing()) {
+                                        if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() + 2] == checker) {
+                                            checker.setColor(2);
+                                            checker.selectChecker();
+                                            checker.makeKing(lastChecker);
+                                            checkerIsSelected = true;
+                                            lastChecker.setColor(0);
+                                            lastChecker.unselectChecker();
+                                            lastChecker.destroyKing();
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].setColor(0);
+                                            checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].destroyKing();
+                                            numRed--;
+                                            lastChecker = checker;
                                         }
                                     }
                                 }
