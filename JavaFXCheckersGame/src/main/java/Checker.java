@@ -48,14 +48,22 @@ public class Checker extends Button {
         return false;
     }
 
-    void makeKing() {
-        if (this.color == 1 && this.row == 7) {
+    void makeKing(Checker lastChecker) {
+        if (lastChecker.isKing()) {
+            this.setText("K");
+            this.king = true;
+        } else if (this.color == 1 && this.row == 7) {
             this.setText("K");
             this.king = true;
         } else if (this.color == 2 && this.row == 0) {
             this.setText("K");
             this.king = true;
         }
+    }
+
+    void destroyKing() {
+        this.setText("");
+        this.king = false;
     }
 
     boolean isKing() {
