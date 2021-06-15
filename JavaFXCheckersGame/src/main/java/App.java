@@ -1,3 +1,4 @@
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,10 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.MissingFormatWidthException;
 
 /**
  * JavaFX App
@@ -33,6 +36,7 @@ public class App extends Application {
     private ArrayList<Pair<Integer, Integer>> possibleMoves;
     private int numRed = 12;
     private int numBlue = 12;
+    private PauseTransition pause;
 
     // Welcome Scene Data Members
     private Button singlePlayer;
@@ -50,6 +54,7 @@ public class App extends Application {
 
     // Result Scene Data Members
     private Button exitButton2;
+    private Label resultLabel;
 
     public static void main(String[] args) {
         launch();
@@ -64,6 +69,11 @@ public class App extends Application {
         sceneMap.put("result", resultScene());
 
         singlePlayer.setOnAction(e -> stage.setScene(sceneMap.get("single")));
+
+        pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> { stage.setScene(sceneMap.get("result"));
+                                    resultLabel.setText("Player " + lastChecker.getColor() + " Won!");
+        });
 
         exitButton1.setOnAction(e -> {
             Platform.exit();
@@ -143,7 +153,7 @@ public class App extends Application {
     }
 
     public Scene resultScene() {
-        Label resultLabel = new Label("Player Blank Won!");
+        resultLabel = new Label();
         resultLabel.setAlignment(Pos.CENTER);
         Button playAgainButton = new Button("Play Again");
         playAgainButton.setAlignment(Pos.CENTER);
@@ -384,7 +394,10 @@ public class App extends Application {
 
                                 }
                             }
+                        if (isWin() > 0) {
+                            pause.play();
                         }
+                    }
                 });
                 grid.add(gb, i, j); // Adds GameButton to GridPane
                 gameBoardMatrix[j][i] = gb; // Adds GameButton to 2D Matrix Data Structure
