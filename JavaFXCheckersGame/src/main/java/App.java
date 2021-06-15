@@ -394,7 +394,7 @@ public class App extends Application {
 
                                 }
                             }
-                        if (isWin() > 0) {
+                        if (isWin1()) {
                             pause.play();
                         }
                     }
@@ -406,15 +406,13 @@ public class App extends Application {
         }
     }
 
-    int isWin() {
+    boolean isWin1() {
         /////
         ///// ALSOOOOOOO Check if a player can't move. If they can't then they lose.
         /////
-        if (numRed == 0) {
-            return 1;
-        } else if (numBlue == 0) {
-            return 2;
+        if (numRed == 0 || numBlue == 0) {
+            return true;
         }
-        return 0;
+        return false;
     }
 }
