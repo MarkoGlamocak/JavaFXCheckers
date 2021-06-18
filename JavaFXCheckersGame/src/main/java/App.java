@@ -4,11 +4,13 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -34,7 +36,7 @@ public class App extends Application {
     private Checker lastChecker;
     private boolean checkerIsSelected = false;
     private boolean canMoveAgain = true;
-    private ArrayList<Pair<Integer, Integer>> possibleMoves;
+
     private int numRed = 12;
     private int numBlue = 12;
     private PauseTransition pause;
@@ -52,6 +54,7 @@ public class App extends Application {
     private Label turnTracker;
     private Button endTurn;
     private Label timerLabel;
+    private Button startGameButton;
 
     // How To Play Scene Data Members
     private Button goBackButton;
@@ -98,6 +101,11 @@ public class App extends Application {
         pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(e -> { stage.setScene(sceneMap.get("result"));
                                     resultLabel.setText("Player " + lastChecker.getColor() + " Won!");
+        });
+
+        startGameButton.setOnAction(e -> {
+            startGameButton.setVisible(false);
+            startGameButton.setDisable(true);
         });
 
         exitButton1.setOnAction(e -> {
@@ -154,17 +162,20 @@ public class App extends Application {
         checkerMatrix = new Checker[8][8];
         checkerLocation = new int[2];
         gameBoard = new GridPane();
-        possibleMoves = new ArrayList<>();
         addGrid(gameBoard);
         timerLabel = new Label("5:00");
         turnTracker = new Label("Red's Turn");
         turnTracker.setStyle("-fx-background-color: red");
         endTurn = new Button("End Turn");
+        startGameButton = new Button("Start");
+        startGameButton.setFont(Font.font("Times New Roman", 70));
         VBox root1 = new VBox(timerLabel, turnTracker, endTurn);
         root1.setAlignment(Pos.CENTER);
         root1.setPrefSize(200, 50);
         root1.setSpacing(15);
-        HBox root = new HBox(root1, gameBoard);
+        HBox root2 = new HBox(root1, gameBoard);
+        root2.setAlignment(Pos.CENTER);
+        StackPane root = new StackPane(root2, startGameButton);
         root.setAlignment(Pos.CENTER);
         return new Scene(root, 800, 800);
     }
