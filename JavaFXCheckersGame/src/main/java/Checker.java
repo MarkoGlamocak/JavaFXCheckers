@@ -6,6 +6,7 @@ public class Checker extends Button {
     private int column;
     private int color; // color = 0 means the checker is white, color = 1 means the checker is red, color = 2 means the tile is blue.
     private boolean king;
+    private boolean selected;
     final double r = 30;
 
     Checker(int x, int y, int z) {
@@ -31,11 +32,13 @@ public class Checker extends Button {
     void selectChecker() {
         this.setMinSize((2*r) + 10, (2*r) + 10);
         this.setMaxSize((2*r) + 10, (2*r) + 10);
+        this.selected = true;
     }
 
     void unselectChecker() {
         this.setMinSize(2*r, 2*r);
         this.setMaxSize(2*r, 2*r);
+        this.selected = false;
     }
 
     boolean isValid(int val) {
@@ -69,6 +72,8 @@ public class Checker extends Button {
     boolean isKing() {
         return this.king;
     }
+
+    boolean isSelected() { return this.selected; }
 
     // Returns the row the Checker is in the gridpane
     public int getRow() {
