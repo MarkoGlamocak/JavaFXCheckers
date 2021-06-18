@@ -17,7 +17,8 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.MissingFormatWidthException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * JavaFX App
@@ -37,6 +38,8 @@ public class App extends Application {
     private int numRed = 12;
     private int numBlue = 12;
     private PauseTransition pause;
+    private Timer timer;
+    private TimerTask timeTask;
 
     // Welcome Scene Data Members
     private Button singlePlayer;
@@ -48,6 +51,7 @@ public class App extends Application {
     private GridPane gameBoard;
     private Label turnTracker;
     private Button endTurn;
+    private Label timerLabel;
 
     // How To Play Scene Data Members
     private Button goBackButton;
@@ -69,6 +73,27 @@ public class App extends Application {
         sceneMap.put("result", resultScene());
 
         singlePlayer.setOnAction(e -> stage.setScene(sceneMap.get("single")));
+
+        timer = new Timer();
+        timeTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (lastChecker != null && lastChecker.isSelected()) {
+                    lastChecker.unselectChecker();
+                }
+                checkerIsSelected = false;
+                canMoveAgain = true;
+                if (lastChecker.getColor() == 1) {
+                    whichPlayer = 2;
+                    turnTracker.setText("Blue's Turn");
+                    turnTracker.setStyle("-fx-background-color: blue");
+                } else {
+                    whichPlayer = 1;
+                    turnTracker.setText("Red's Turn");
+                    turnTracker.setStyle("-fx-background-color: red");
+                }
+            }
+        };
 
         pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(e -> { stage.setScene(sceneMap.get("result"));
@@ -131,11 +156,11 @@ public class App extends Application {
         gameBoard = new GridPane();
         possibleMoves = new ArrayList<>();
         addGrid(gameBoard);
-        Label timer = new Label("5:00");
+        timerLabel = new Label("5:00");
         turnTracker = new Label("Red's Turn");
         turnTracker.setStyle("-fx-background-color: red");
         endTurn = new Button("End Turn");
-        VBox root1 = new VBox(timer, turnTracker, endTurn);
+        VBox root1 = new VBox(timerLabel, turnTracker, endTurn);
         root1.setAlignment(Pos.CENTER);
         root1.setPrefSize(200, 50);
         root1.setSpacing(15);
@@ -360,7 +385,7 @@ public class App extends Application {
                                             lastChecker = checker;
                                         }
                                     }
-                                    if (lastChecker.getRow() + 2 >= 0 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain && lastChecker.isKing()) {
+                                    if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() - 2 >= 0 && canMoveAgain && lastChecker.isKing()) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() - 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() - 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
@@ -375,7 +400,7 @@ public class App extends Application {
                                             lastChecker = checker;
                                         }
                                     }
-                                    if (lastChecker.getRow() + 2 >= 0 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain && lastChecker.isKing()) {
+                                    if (lastChecker.getRow() + 2 <= 7 && lastChecker.getColumn() + 2 <= 7 && canMoveAgain && lastChecker.isKing()) {
                                         if (checkerMatrix[lastChecker.getRow() + 1][lastChecker.getColumn() + 1].getColor() == 1 && checkerMatrix[lastChecker.getRow() + 2][lastChecker.getColumn() + 2] == checker) {
                                             checker.setColor(2);
                                             checker.selectChecker();
@@ -415,4 +440,18 @@ public class App extends Application {
         }
         return false;
     }
+
+    /*
+    boolean isWin2() {
+        for (Checker[] a : checkerMatrix) {
+            for (Checker e : a) {
+                if (e.getRow() + 1 <= 7 && ) {
+
+                }
+            }
+        }
+        return true;
+    }
+
+     */
 }
